@@ -5,12 +5,14 @@ window.setInterval(function() {
     var latestMessage = $('.message.from-visitor').last()
     var text = latestMessage.text()
     var timestamp = latestMessage.parent('.conversation-wrapper').find('.timestamp').text()
-    var fullname = latestMessage.parents('.conversation-pane').find('.header-fullname').text()
+    var fullName = latestMessage.parents('.conversation-pane').find('.header-fullname').text()
     var email = latestMessage.parents('.conversation-pane').find('.header-email').text()
+    var operatorName = $('#opname').text()
     console.log("text", text);
     console.log("timestamp", timestamp);
-    console.log("fullname", fullname);
+    console.log("fullName", fullName);
     console.log("email", email);
+    console.log("operatorName", operatorName);
   }
 
   messagesFromVisitorCount = length
