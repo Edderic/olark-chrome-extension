@@ -1,0 +1,11 @@
+body {
+  font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+  font-size: 100%;
+  width: 500px;
+}
+#get_url input {
+  width:400px;
+}
+#status {
+  /* avoid an excessively wide status text */
+}
