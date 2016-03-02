@@ -13,7 +13,7 @@ function postMessages(){
 }
 
 function reducedMessages() {
-  var messages = $('.message');
+  var messages = $('.conversation-view:not(".inactive") .message');
   messages.reduce = Array.prototype.reduce;
 
   return messages.reduce(function(prev, curr) {
