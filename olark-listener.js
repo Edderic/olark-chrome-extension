@@ -1,17 +1,15 @@
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if( request.message === "start" ) {
-      start();
-    }
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if( request.message === "start" ) {
+    sendResponse({messages: postMessages()});
   }
-);
+});
 
-function start(){
-  // alert("started");
-
+function postMessages(){
   var port = chrome.runtime.connect({name: 'knockknock'})
 
   port.postMessage({messages: reducedMessages()});
+
+  return reducedMessages();
 }
 
 function reducedMessages() {
