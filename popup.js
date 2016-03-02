@@ -11,8 +11,38 @@ function handleEmptyURL(callback) {
 
     callback();
   })
-
 }
+
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+  var tbody;
+
+  if (request.conversations) {
+    console.log("request.conversations", request.conversations);
+    tbody = document.getElementsByTagName('tbody')[0];
+    tbody.innerHTML = '';
+    request.conversations.forEach(function(convo) {
+      var tr = document.createElement('tr')
+      var arr = ['snippet', 'score']
+
+      arr.forEach(function(attribute) {
+        var td = document.createElement('td');
+        td.textContent = convo[attribute];
+        td.className += ' ' + attribute
+        tr.appendChild(td);
+      })
+
+      var td = document.createElement('td');
+      var a =  document.createElement('a');
+      a.href = convo['url'];
+      a.textContent = 'url';
+      td.appendChild(a);
+      tr.appendChild(td);
+
+      tbody.appendChild(tr);
+    })
+  }
+})
+
 
 document.addEventListener("DOMContentLoaded", function() {
   function message(response) {

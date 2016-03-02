@@ -9,3 +9,13 @@ body {
 #status {
   /* avoid an excessively wide status text */
 }
+
+table {
+  width: 100%;
+}
+
+tr td {
+  text-align: center;
+  font-weight: 100;
+  font-size: 12px;
+}
