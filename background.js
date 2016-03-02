@@ -1,22 +1,17 @@
-var DEBUG = true;
-var olarkChatURLtoPOST = "https://lgmetrics.herokuapp.com/olark_chat"
-
-if (DEBUG) {
-  olarkChatURLtoPOST = "http://localhost:1212/olark_chat"
-}
+var portRef;
 
 chrome.runtime.onConnect.addListener(function(port) {
-  // console.assert(port.name == "knockknock");
+  portRef = port
+  console.log('inside bg addListener')
+  console.assert(port.name == "knockknock");
   port.onMessage.addListener(function(msg) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", olarkChatURLtoPOST, true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
-        alert('data')
-        port.postMessage(data);
-      }
-      alert(xhr.readyState)
+    console.log("msg", msg);
+    if (msg.messages) {
+      console.log("msg.messages", msg.messages);
     }
-    xhr.send();
-  })
+  });
+});
+
+chrome.browserAction.onClicked.addListener(function (tab) {
+  portRef.postMessage({action: "POPUP::CLICKED"})
 });
