@@ -32,6 +32,14 @@ function createLinkTD(convo) {
   return td;
 }
 
+function createScoreTD(convo) {
+  var td = document.createElement('td');
+  td.textContent = parseFloat(convo['Cosine similarity']).toFixed(3);
+  td.className += ' ' + 'score'
+
+  return td;
+}
+
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   var table, thead, tbody, body, gears;
 
@@ -46,7 +54,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
     request.conversations.forEach(function(convo) {
       var tr = document.createElement('tr')
-      var arr = ['Conversation', 'Cosine similarity']
+      var arr = ['Conversation']
 
       arr.forEach(function(attribute) {
         var td = document.createElement('td');
@@ -55,6 +63,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         tr.appendChild(td);
       })
 
+      tr.appendChild(createScoreTD(convo))
       tr.appendChild(createLinkTD(convo));
       tbody.appendChild(tr);
     })
@@ -95,7 +104,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var bkgrPage = chrome.extension.getBackgroundPage();
     get_url = document.getElementById('get_url_input').value
-    console.log("get_url", get_url);
     bkgrPage.chrome.storage.sync.set({'get_url': get_url});
   });
 
