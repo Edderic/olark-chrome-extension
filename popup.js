@@ -40,6 +40,16 @@ function createScoreTD(convo) {
   return td;
 }
 
+function authors(convo) {
+  return convo.Conversation.reduce(function(prev, curr) {
+    var author = curr.author
+    if (prev.indexOf(author) == -1) {
+      prev.push(author)
+    }
+    return prev
+  }, [])
+}
+
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   var table, thead, tbody, body, gears;
 
@@ -53,15 +63,20 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     createTHEAD(thead)
 
     request.conversations.forEach(function(convo) {
+      var _authors = authors(convo);
       var tr = document.createElement('tr')
-      var arr = ['Conversation']
+      var convoTD = document.createElement('td');
+      convoTD.className += ' convo-td'
 
-      arr.forEach(function(attribute) {
-        var td = document.createElement('td');
-        td.textContent = convo[attribute];
-        td.className += ' ' + attribute
-        tr.appendChild(td);
+      convo.Conversation.forEach(function(messageObj) {
+        var messageHtml = document.createElement('div');
+        messageHtml.dataset.author = messageObj.author;
+        messageHtml.dataset.author_index = _authors.indexOf(messageObj.author);
+        messageHtml.textContent = messageObj.message;
+        convoTD.appendChild(messageHtml);
       })
+
+      tr.appendChild(convoTD);
 
       tr.appendChild(createScoreTD(convo))
       tr.appendChild(createLinkTD(convo));

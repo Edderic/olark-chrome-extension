@@ -14,11 +14,45 @@ table {
   width: 100%;
 }
 
+.convo-td {
+  width: 300px;
+}
+
 tr td {
   text-align: center;
   font-weight: 100;
   font-size: 12px;
   border-bottom: 1px solid black;
+}
+
+td div {
+  width: 240px;
+  padding-bottom: 10px;
+}
+
+[data-author_index] {
+  border-radius: 5px;
+  padding: 5px;
+  text-align: left;
+  margin: 10px;
+}
+
+[data-author_index="0"] {
+  background-color: #e9f6fc;
+  border: 1px solid #a7def1;
+  margin-right: auto;
+}
+
+[data-author_index="1"] {
+  margin-left: auto;
+  background-color: #fffbe8;
+  border: 1px solid #f6eab7;
+}
+
+[data-author_index="2"] {
+  margin-left: auto;
+  background-color: #E0F7EF;
+  border: 1px solid #D5E8E2;
 }
 
 #gears {
