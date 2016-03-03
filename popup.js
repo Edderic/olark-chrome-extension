@@ -13,6 +13,25 @@ function handleEmptyURL(callback) {
   })
 }
 
+function createTHEAD(thead) {
+  ['Conversation','Cosine similarity', 'Link'].forEach(function(thName) {
+    var th = document.createElement('th');
+    th.textContent = thName;
+    thead.appendChild(th);
+  })
+}
+
+function createLinkTD(convo) {
+  var td = document.createElement('td');
+  var a =  document.createElement('a');
+  a.href = convo['url'];
+  a.target = '_blank';
+  a.textContent = 'url';
+  td.appendChild(a);
+
+  return td;
+}
+
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   var table, thead, tbody, body, gears;
 
@@ -23,13 +42,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     table.appendChild(thead);
     table.appendChild(tbody);
 
-    ['Conversation','Cosine similarity', 'Link'].forEach(function(thName) {
-      var th = document.createElement('th');
-      th.textContent = thName;
-      thead.appendChild(th);
-    })
-
-    console.log("request.conversations", request.conversations);
+    createTHEAD(thead)
 
     request.conversations.forEach(function(convo) {
       var tr = document.createElement('tr')
@@ -42,14 +55,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         tr.appendChild(td);
       })
 
-      var td = document.createElement('td');
-      var a =  document.createElement('a');
-      a.href = convo['url'];
-      a.target = '_blank';
-      a.textContent = 'url';
-      td.appendChild(a);
-      tr.appendChild(td);
-
+      tr.appendChild(createLinkTD(convo));
       tbody.appendChild(tr);
     })
 
