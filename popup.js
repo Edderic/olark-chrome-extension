@@ -14,15 +14,26 @@ function handleEmptyURL(callback) {
 }
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-  var tbody;
+  var table, thead, tbody, body, gears;
 
   if (request.conversations) {
+    table = document.createElement('table');
+    thead = document.createElement('thead');
+    tbody = document.createElement('tbody')
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    ['Conversation','Cosine similarity', 'Link'].forEach(function(thName) {
+      var th = document.createElement('th');
+      th.textContent = thName;
+      thead.appendChild(th);
+    })
+
     console.log("request.conversations", request.conversations);
-    tbody = document.getElementsByTagName('tbody')[0];
-    tbody.innerHTML = '';
+
     request.conversations.forEach(function(convo) {
       var tr = document.createElement('tr')
-      var arr = ['snippet', 'score']
+      var arr = ['Conversation', 'Cosine similarity']
 
       arr.forEach(function(attribute) {
         var td = document.createElement('td');
@@ -34,12 +45,17 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
       var td = document.createElement('td');
       var a =  document.createElement('a');
       a.href = convo['url'];
+      a.target = '_blank';
       a.textContent = 'url';
       td.appendChild(a);
       tr.appendChild(td);
 
       tbody.appendChild(tr);
     })
+
+    body = document.getElementsByTagName('body')[0];
+    gears = document.getElementById('gears');
+    body.replaceChild(table, gears);
   }
 })
 
@@ -60,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
       function setValue() {
         chrome.tabs.sendMessage(activeTab.id, {"message": "start"}, function(response) {
-          document.getElementById('status').textContent = message(response)
         });
       }
 

@@ -5,13 +5,17 @@ chrome.runtime.onConnect.addListener(function(port) {
     console.log("msg", msg);
     if (msg.messages) {
       console.log("msg.messages", msg.messages);
-      chrome.extension.sendMessage({'conversations': [
-        {
-          'url' : 'http://somefakeurl',
-          'score': 0.00,
-          'snippet': 'I would like to know what other people are doing.'
+      doc = encodeURIComponent(msg.messages)
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "http://localhost:9998/documents?document=" + doc, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          // JSON.parse does not evaluate the attacker's scripts.
+          var resp = JSON.parse(xhr.responseText);
+          chrome.extension.sendMessage( {'conversations': resp})
         }
-      ]})
+      }
+      xhr.send();
     }
   });
 });
