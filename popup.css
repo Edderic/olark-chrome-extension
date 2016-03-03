@@ -61,4 +61,29 @@ td div {
   width: 100px;
 }
 
+.score {
+  font-size: 20px;
+  font-weight: bold;
+}
+.link-circle, .score-circle {
+  background-color: peachpuff;
+  border-radius: 100%;
+  padding: 0;
+}
+
+.link-circle {
+  border: 1px solid #FBDAAE;
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+  line-height: 3.675;
+}
+
+.score-circle {
+  border: 1px solid #FBDAAE;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+  line-height: 4.5;
+}
 

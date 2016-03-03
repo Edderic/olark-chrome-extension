@@ -14,7 +14,7 @@ function handleEmptyURL(callback) {
 }
 
 function createTHEAD(thead) {
-  ['Conversation','Cosine similarity', 'Link'].forEach(function(thName) {
+  ['Conversation','Score', 'Link'].forEach(function(thName) {
     var th = document.createElement('th');
     th.textContent = thName;
     thead.appendChild(th);
@@ -23,18 +23,26 @@ function createTHEAD(thead) {
 
 function createLinkTD(convo) {
   var td = document.createElement('td');
+  var circle = document.createElement('div');
+  circle.className = 'link-circle';
   var a =  document.createElement('a');
   a.href = convo['url'];
   a.target = '_blank';
-  a.textContent = 'url';
-  td.appendChild(a);
+  a.textContent = 'LINK';
+  circle.appendChild(a)
+  td.appendChild(circle);
 
   return td;
 }
 
 function createScoreTD(convo) {
   var td = document.createElement('td');
-  td.textContent = parseFloat(convo['Cosine similarity']).toFixed(3);
+  var circle = document.createElement('div');
+  var percentage = parseFloat(convo['Cosine similarity']) * 100;
+  var roundedPerc = percentage.toFixed(2);
+  circle.className = 'score-circle'
+  circle.textContent = '' + roundedPerc + '%'
+  td.appendChild(circle)
   td.className += ' ' + 'score'
 
   return td;
