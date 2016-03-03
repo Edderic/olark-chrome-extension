@@ -107,9 +107,24 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  function currentURLmatchesSavedURL(activeTab, bkgrPage, callback) {
+    var body, gears;
+
+    if (activeTab.url !== 'https://chat.olark.com/') {
+      body = document.getElementsByTagName('body')[0];
+      gears = document.getElementById('gears');
+      error = document.createElement('div');
+      error.textContent = "Sorry, the active tab must have the following URL: 'https://chat.olark.com'"
+      body.replaceChild(error, gears)
+    } else {
+      callback()
+    }
+  }
+
   function popup() {
     chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
       var activeTab = tabs[0];
+      var activeURL = activeTab.url;
       var bkgrPage = chrome.extension.getBackgroundPage();
 
       function setValue() {
@@ -117,7 +132,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
       }
 
-      handleEmptyURL(setValue);
+      function handleEmptyURLandSetValue() {
+        handleEmptyURL(setValue);
+      }
+
+      currentURLmatchesSavedURL(activeTab, bkgrPage, handleEmptyURLandSetValue);
     });
   }
 
