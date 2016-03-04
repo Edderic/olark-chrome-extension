@@ -22,6 +22,7 @@
     "activeTab",
     "storage",
     "http://localhost/*",
+    "https://*/*",
     "https://ajax.googleapis.com/"
   ]
 }

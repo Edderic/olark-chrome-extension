@@ -31,6 +31,7 @@ function createLinkTD(convo) {
   a.textContent = 'LINK';
   circle.appendChild(a)
   td.appendChild(circle);
+  td.className = 'link-td';
 
   return td;
 }
@@ -43,7 +44,7 @@ function createScoreTD(convo) {
   circle.className = 'score-circle'
   circle.textContent = '' + roundedPerc + '%'
   td.appendChild(circle)
-  td.className += ' ' + 'score'
+  td.className += 'score-td'
 
   return td;
 }
