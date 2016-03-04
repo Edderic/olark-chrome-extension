@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Olark Conversation Recommender",
-  "description": "This extension POSTs the conversation to an API that gives recommendations to look into.",
+  "name": "Olark Chat Recommender",
+  "description": "This extension scrapes the current Olark chat and hits an endpoint that recommends similar chats.  The endpoint must be built separately.",
   "version": "2.0",
 
   "browser_action": {
