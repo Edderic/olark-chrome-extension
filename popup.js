@@ -1,6 +1,5 @@
 function handleEmptyURL(callback) {
   this.chrome.storage.sync.get('get_url', function(items) {
-    console.log("items", items);
     var input = document.getElementById('get_url_input')
 
     if (items.get_url) {
